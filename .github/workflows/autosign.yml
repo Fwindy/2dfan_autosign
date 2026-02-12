@@ -17,6 +17,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Generate and Commit random.txt
+      run: |
+        # 配置 git 用户信息
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        # 生成随机内容文件
+        echo "Auto-generated on $(date) with random ID: $RANDOM" > random.txt
+        
+        # 提交并推送
+        git add random.txt
+        git commit -m "Auto update random.txt [skip ci]" || echo "No changes to commit"
+        git push
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
